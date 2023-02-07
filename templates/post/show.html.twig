@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Post{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2 class="text-center mt-5 mb-3">Show Post</h2>
+        <div class="card">
+            <div class="card-header">
+                <a class="btn btn-outline-info float-right" href="{{ path('app_post_index') }}"> 
+                    View All Posts
+                </a>
+            </div>
+            <div class="card-body">
+                <p>{{ post.title }}</p>
+                <p>{{ post.message }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

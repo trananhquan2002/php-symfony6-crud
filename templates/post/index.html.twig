@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Post Manager{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h2 class="text-center mt-5 mb-3">Post Manager</h2>
+		<div class="card">
+			<div class="card-header">
+				<a class="btn btn-outline-primary" href="{{ path('app_post_new') }}">Create New Post</a>
+			</div>
+			<div class="card-body">
+				<table class="table table table-bordered">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Title</th>
+							<th>Message</th>
+							<th>Category_id</th>
+							<th>Userid</th>
+							<th>Status</th>
+							<th>Created</th>
+							<th>Updated</th>
+							<th width="240px">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for post in posts %}
+							<tr>
+								<td>{{ post.id }}</td>
+								<td>{{ post.title }}</td>
+								<td>{{ post.message }}</td>
+								<td>{{ post.categoryId }}</td>
+								<td>{{ post.userid }}</td>
+								<td>{{ post.status }}</td>
+								<td>{{ post.created ? post.created|date('Y-m-d H:i:s') : '' }}</td>
+								<td>{{ post.updated ? post.updated|date('Y-m-d H:i:s') : '' }}</td>
+								<td>
+                                    <form method="post" action="{{ path('app_post_delete', {'id': post.id}) }}" onsubmit="return confirm('Are you sure you want to delete {{ post.title }}?');">
+                                        <a class="btn btn-outline-info" href="{{ path('app_post_show', {'id': post.id}) }}">Show</a>
+                                        <a class="btn btn-outline-success" href="{{ path('app_post_edit', {'id': post.id}) }}">Edit</a>
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
+                                        <button class="btn btn-outline-danger">Delete</button>
+                                    </form>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}
